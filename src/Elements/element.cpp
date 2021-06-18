@@ -1,9 +1,8 @@
 #include "../../include/Elements/element.hpp"
 
-Element::Element(String name, byte pin)
+Element::Element(String name)
 {
     this->name = name;
-    this->pin = pin;
 }
 
 Element::~Element()

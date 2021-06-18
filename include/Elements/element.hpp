@@ -8,12 +8,11 @@ class Element
 {
 protected:
     String name;
-    byte pin;
 
-public:
-    Element(String name, byte pin);
+    Element(String name);
     ~Element();
 
+public:
     virtual void Action();
 
     String getName();
