@@ -11,7 +11,7 @@ private:
     LiquidCrystal *lcd;
 
 public:
-    LCD(String name, byte pin[]);
+    LCD(byte pin[]);
     ~LCD();
 
     void Initialize();

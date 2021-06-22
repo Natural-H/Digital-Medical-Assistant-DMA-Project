@@ -7,13 +7,11 @@
 class Element
 {
 protected:
-    String name;
-
-    Element(String name);
+    Element();
     ~Element();
 
 public:
     virtual void Action();
 
-    String getName();
+    virtual void Action(uint32_t argument);
 };

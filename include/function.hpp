@@ -4,22 +4,36 @@
 #include <string.h>
 #include <Vector.h>
 
+#include "Elements/element.hpp"
+#include "Elements/led.hpp"
+#include "Elements/button.hpp"
+
 class Function
 {
 private:
     String id;
 
+    Element *element;
+
     struct Actions
     {
-        String startup = "startup";
-        String light = "light";
-        String cut = "cut";
+        const String startup = "startup";
+        const String light = "light";
+        const String cut = "cut";
     };
-    
-    Actions action;
 
-public:
-    Function(/* args */);
+    Function(String action, byte pin[], unsigned int x, unsigned int y);
     
     ~Function();
+
+public:
+    static void Create_function(String action, byte pin[], unsigned int x, unsigned int y);
+
+    static Actions action;
+
+    static Vector<Function *> Functions;
+
+    void Execute();
+
+    void Execute(uint32_t argument);
 };

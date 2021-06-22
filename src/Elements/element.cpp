@@ -1,14 +1,9 @@
 #include "../../include/Elements/element.hpp"
 
-Element::Element(String name)
-{
-    this->name = name;
-}
+Element::Element() {}
 
-Element::~Element()
-{
-}
+Element::~Element() {}
 
 void Element::Action() {}
 
-String Element::getName() { return this->name; }
+void Element::Action(uint32_t argument) {}

@@ -10,7 +10,7 @@ private:
     byte pin;
 
 public:
-    Led(String name, byte pin);
+    Led(byte pin);
     ~Led();
 
     void Initialize();

@@ -1,6 +1,6 @@
 #include "../../include/Elements/led.hpp"
 
-Led::Led(String name, byte pin) : Element(name)
+Led::Led(byte pin) : Element()
 {
     this->pin = pin;
     this->Initialize();

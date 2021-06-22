@@ -1,6 +1,6 @@
 #include "../../include/Elements/lcd.hpp"
 
-LCD::LCD(String name, byte pin[]) : Element(name)
+LCD::LCD(byte pin[]) : Element()
 {
     this->pin = pin;
 

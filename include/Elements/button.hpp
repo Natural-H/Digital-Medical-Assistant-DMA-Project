@@ -14,7 +14,7 @@ private:
     unsigned long debonuce_delay;
 
 public:
-    Button(String name, byte pin);
+    Button(byte pin);
     ~Button();
 
     void Initialize();

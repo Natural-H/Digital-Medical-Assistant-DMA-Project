@@ -1,6 +1,6 @@
 #include "../../include/Elements/button.hpp"
 
-Button::Button(String name, byte pin) : Element(name)
+Button::Button(byte pin) : Element()
 {
     this->last_debonuce_time = 0;
     this->debonuce_delay = 35;
