@@ -18,8 +18,8 @@ public:
     ~Button();
 
     void Initialize();
-    void updateState();
+    void update_state();
 
-    byte getState();
+    byte get_state();
     bool isPressed();
 };

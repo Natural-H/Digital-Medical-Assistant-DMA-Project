@@ -8,12 +8,12 @@ Button::Button(byte pin) : Element()
     this->pin = pin;
     
     this->Initialize();
-    this->updateState();
+    this->update_state();
 }
 
 Button::~Button() {}
 
-void Button::updateState()
+void Button::update_state()
 {
     byte new_reading = digitalRead(this->pin);
 
@@ -26,10 +26,10 @@ void Button::updateState()
     last_reading = new_reading;
 }
 
-byte Button::getState()
+byte Button::get_state()
 {
-    this->updateState();
+    this->update_state();
     return this->state;
 }
 
-bool Button::isPressed() { return (getState() == HIGH); }
+bool Button::isPressed() { return (get_state() == HIGH); }
