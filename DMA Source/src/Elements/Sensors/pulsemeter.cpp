@@ -1,6 +1,6 @@
-#include "../../include/Elements/pulsemeter.hpp"
+#include "../../../include/Elements/Sensors/pulsemeter.hpp"
 
-Pulsemeter::Pulsemeter(byte pin, byte led_pin) : Element()
+Pulsemeter::Pulsemeter(byte pin, byte led_pin) : Sensor()
 {
     this->Initialize();
 }

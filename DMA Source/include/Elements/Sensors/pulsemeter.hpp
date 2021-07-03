@@ -2,10 +2,10 @@
 
 #include <Arduino.h>
 
-#include "element.hpp"
-#include "led.hpp"
+#include "sensor.hpp"
+#include "../led.hpp"
 
-class Pulsemeter : public Element
+class Pulsemeter : public Sensor
 {
 private:
     byte pin;
