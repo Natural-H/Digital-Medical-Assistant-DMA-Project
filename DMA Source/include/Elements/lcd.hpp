@@ -15,16 +15,17 @@ private:
 
     uint16_t actual_position;
 
-    Vector<Section> sections;
-
 public:
     LCD(byte pin[]);
     ~LCD();
+
+    static Vector<Section> sections;
 
     void Initialize();
 
     void Action() override;
     void Action(uint32_t argument) override;
     void show_section(uint32_t section);
+    void update_section();
     void apply_position();
 };

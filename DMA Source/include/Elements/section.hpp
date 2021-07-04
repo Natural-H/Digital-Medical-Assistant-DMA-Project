@@ -15,8 +15,6 @@ private:
     String *name_of_data;
     String *data;
 
-    Sensor *sensor;
-
     struct Measurements
     {
         const String temperature = "Temperature.";
@@ -30,6 +28,10 @@ public:
 
     static Measurements measuring;
 
+    Sensor *sensor;
+
     String getName();
     String getInfo();
+
+    void update_data();
 };

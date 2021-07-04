@@ -16,8 +16,6 @@ private:
 
     Element *element;
 
-    LCD *lcd;
-
     struct Actions
     {
         const String startup = "startup";
@@ -34,8 +32,13 @@ public:
     Function(String action, byte pin[], unsigned int x, unsigned int y);
     Function(String action, byte pin[]);
     Function(String action);
+    Function();
 
     ~Function();
+
+    bool operator==(Function &obj);
+
+    LCD *lcd;
 
     static void Create_function(String action, byte pin[], unsigned int x, unsigned int y);
     static void Create_function(String action, byte pin[]);
@@ -47,4 +50,6 @@ public:
     void Execute();
 
     void Execute(uint32_t argument);
+
+    String get_action();
 };

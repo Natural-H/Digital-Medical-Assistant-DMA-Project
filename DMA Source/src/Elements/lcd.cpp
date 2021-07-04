@@ -1,5 +1,7 @@
 #include "../../include/Elements/lcd.hpp"
 
+Vector<Section> LCD::sections;
+
 LCD::LCD(byte pin[]) : Element()
 {
     String name_of_data[2] {"test1", "test2"};
@@ -81,3 +83,5 @@ void LCD::show_section(uint32_t section)
     this->lcd->println(sections[section].getName());
     this->lcd->println(sections[section].getInfo());
 }
+
+void LCD::update_section() { this->show_section(this->actual_position); }

@@ -37,7 +37,11 @@ Function::Function(String action, byte pin[])
 
 Function::Function(String action) { this->function = action; }
 
+Function::Function() {}
+
 Function::~Function() {}
+
+bool Function::operator==(Function &obj) { return (this->get_action() == obj.get_action()); }
 
 void Function::Create_function(String action, byte pin[], unsigned int x, unsigned int y)
 {
@@ -60,3 +64,5 @@ void Function::Execute()
     if (this->function == action.move_to_right)
         this->lcd->Action(2);
 }
+
+String Function::get_action() { return this->function; }
