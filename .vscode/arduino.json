@@ -1,7 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "sketch": "DMA Source/main.ino",
-    "output": "../build",
-    "port": "/dev/ttyUSB0",
-    "programmer": "arduino:arduinoasispatmega32u4"
-}
