@@ -1,6 +1,8 @@
 # Digital Medical Assistant (DMA) Project
 This is just a project
 
+--To do:--
+
 # Previous Requierements
 - [Arduino IDE](https://www.arduino.cc/en/software) installed.
 - [RF24](https://www.arduino.cc/reference/en/libraries/rf24/) and [Vector](https://www.arduino.cc/reference/en/libraries/vector/) libraries for Arduino IDE installed.
