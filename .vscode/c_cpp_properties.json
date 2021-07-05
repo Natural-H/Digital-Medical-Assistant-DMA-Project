@@ -19,8 +19,8 @@
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
                 "C:\\Users\\marco\\OneDrive\\Documents\\Arduino\\libraries\\Vector\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\LiquidCrystal\\src",
-                "C:\\Users\\marco\\OneDrive\\Documents\\Arduino\\libraries\\RF24",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\SPI\\src",
+                "C:\\Users\\marco\\OneDrive\\Documents\\Arduino\\libraries\\RF24",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\7.3.0\\include-fixed",
                 "c:\\program files (x86)\\arduino\\hardware\\tools\\avr\\avr\\include"

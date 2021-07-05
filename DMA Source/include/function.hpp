@@ -23,13 +23,15 @@ private:
         const String cut = "cut";
         const String move_to_left = "mtl";
         const String move_to_right = "mtr";
+        const String centered = "centered";
     };
 
-    unsigned int trigger_x;
-    unsigned int trigger_y;
+    int trigger_x;
+    int trigger_y;
 
 public:
-    Function(String action, byte pin[], unsigned int x, unsigned int y);
+    Function(String action, byte pin[], int x, int y);
+    Function(String action, int x, int y);
     Function(String action, byte pin[]);
     Function(String action);
     Function();
@@ -38,18 +40,17 @@ public:
 
     bool operator==(Function &obj);
 
-    LCD *lcd;
+    static LCD *lcd;
 
-    static void Create_function(String action, byte pin[], unsigned int x, unsigned int y);
+    static void Create_function(String action, byte pin[], int x, int y);
+    static void Create_function(String action, int x, int y);
     static void Create_function(String action, byte pin[]);
 
     static Actions action;
 
-    static Vector<Function *> Functions;
+    static Vector<Function *> functions;
 
     void Execute();
-
-    void Execute(uint32_t argument);
 
     String get_action();
 };

@@ -2,11 +2,9 @@
 
 Section::Measurements Section::measuring;
 
-Section::Section(String measure, String name_of_data[2], String data[2])
+Section::Section(String measure)
 {
     this->measure = measure;
-    this->name_of_data = name_of_data;
-    this->data = data;
 
     if (this->measure == Section::measuring.temperature)
         this->sensor = new Temperature_Sensor(A0);
@@ -26,8 +24,8 @@ String Section::getName() { return this->measure; }
 
 String Section::getInfo()
 {
-    this->update_data();
-    return (this->name_of_data[0] + ": " + this->data[0] + " " + this->name_of_data[1] + this->data[1]);
+    // this->update_data();
+    return (this->data + " " + this->status[1]);
 }
 
-void Section::update_data() { this->data[0] = this->sensor->get_value(); }
+void Section::update_data() { this->data = this->sensor->get_value(); }

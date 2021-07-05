@@ -12,8 +12,8 @@ class Section
 {
 private:
     String measure;
-    String *name_of_data;
-    String *data;
+    String status;
+    String data;
 
     struct Measurements
     {
@@ -23,7 +23,7 @@ private:
     };
 
 public:
-    Section(String measure, String name_of_data[2], String data[2]);
+    Section(String measure);
     ~Section();
 
     static Measurements measuring;

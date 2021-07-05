@@ -1,9 +1,10 @@
 #include "../include/function.hpp"
 
-Vector<Function *> Function::Functions;
+Vector<Function *> Function::functions;
 Function::Actions Function::action;
+LCD *Function::lcd;
 
-Function::Function(String action, byte pin[], unsigned int x, unsigned int y)
+Function::Function(String action, byte pin[], int x, int y)
 {
     this->function = action;
     this->trigger_x = x;
@@ -13,11 +14,18 @@ Function::Function(String action, byte pin[], unsigned int x, unsigned int y)
     if (action == Function::action.startup)
     {
         this->element = new Led(10);
-        this->lcd = new LCD(pin);
+        lcd = new LCD(pin);
     }
 
     else if (action == Function::action.light)
         this->element = new Led(pin[0]);
+}
+
+Function::Function(String action, int x, int y)
+{
+    this->function = action;
+    this->trigger_x = x;
+    this->trigger_y = y;
 }
 
 Function::Function(String action, byte pin[])
@@ -28,7 +36,7 @@ Function::Function(String action, byte pin[])
     if (action == Function::action.startup)
     {
         this->element = new Led(10);
-        this->lcd = new LCD(pin);
+        lcd = new LCD(pin);
     }
 
     else if (action == Function::action.light)
@@ -43,26 +51,31 @@ Function::~Function() {}
 
 bool Function::operator==(Function &obj) { return (this->get_action() == obj.get_action()); }
 
-void Function::Create_function(String action, byte pin[], unsigned int x, unsigned int y)
+void Function::Create_function(String action, byte pin[], int x, int y)
 {
-    Functions.push_back(new Function(action, pin, x, y));
+    functions.push_back(new Function(action, pin, x, y));
+}
+
+void Function::Create_function(String action, int x, int y)
+{
+    functions.push_back(new Function(action, x, y));
 }
 
 void Function::Create_function(String action, byte pin[])
 {
-    Functions.push_back(new Function(action, pin));
+    functions.push_back(new Function(action, pin));
 }
 
 void Function::Execute()
 {
     if (this->function == action.startup)
-        this->lcd->Action();
+        lcd->Action();
 
     if (this->function == action.move_to_left)
-        this->lcd->Action(1);
+        lcd->Action(1);
 
     if (this->function == action.move_to_right)
-        this->lcd->Action(2);
+        lcd->Action(2);
 }
 
 String Function::get_action() { return this->function; }

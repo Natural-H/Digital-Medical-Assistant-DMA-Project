@@ -1,39 +1,43 @@
 #include <Vector.h>
 
 #include "include/function.hpp"
+#include "include/Listener/listener.hpp"
 #include "include/Elements/element.hpp"
 
-Function last_executed_function;
+//  Necessary to create a listener
+Listener *listener = listener->getInstance();
+
+Function *last_executed_function;
 
 void setup()
 {
-    byte pins_for_LCD[4] {5, 4, 3, 2};
+    byte pins_for_LCD[4]{5, 4, 3, 2};
 
     //  This function only will be called once
-    Function startup(Function::action.startup, pins_for_LCD, 12312 /* This is just a test */, 12321 /* This is just a test */);
+    Function startup(Function::action.startup, pins_for_LCD);
     startup.Execute();
 
-    Function::Create_function(Function::action.move_to_left, pins_for_LCD);
-    Function::Create_function(Function::action.move_to_right, pins_for_LCD);
+    Function::Create_function(Function::action.move_to_left, 12312 /* This is just a test */, 12321 /* This is just a test */);
+    Function::Create_function(Function::action.move_to_right, 12312 /* This is just a test */, 12321 /* This is just a test */);
+    Function::Create_function(Function::action.centered, 0, 0);
+
+    last_executed_function = new Function();
 }
 
 void loop()
 {
-    for (auto &&function : Function::Functions)
+    if (listener->RF24_is_available())
     {
-        if (true)
+        for (auto &&function : Function::functions)
         {
-            function->Execute();
-            last_executed_function = *function;
+            if (true && function != last_executed_function)
+            {
+                function->Execute();
+                last_executed_function = function;
+            }
         }
     }
-    
-    update_sensors();
-    last_executed_function.lcd->update_section();
-}
 
-void update_sensors()
-{
-    for (auto &&section : /*Function::Functions[0]->lcd->sections*/ LCD::sections)
-        section.sensor->update_value();
+    LCD::update_sensors();
+    last_executed_function->lcd->update_section();
 }

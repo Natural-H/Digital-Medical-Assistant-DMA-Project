@@ -15,11 +15,11 @@ private:
 
     uint16_t actual_position;
 
+    static Vector<Section> sections;
+
 public:
     LCD(byte pin[]);
     ~LCD();
-
-    static Vector<Section> sections;
 
     void Initialize();
 
@@ -28,4 +28,6 @@ public:
     void show_section(uint32_t section);
     void update_section();
     void apply_position();
+
+    static void update_sensors();
 };
