@@ -4,11 +4,12 @@ Vector<Function *> Function::functions;
 Function::Actions Function::action;
 LCD *Function::lcd;
 
-Function::Function(String action, byte pin[], int x, int y)
+Function::Function(String action, byte pin[], int x, int y, int radius)
 {
     this->function = action;
     this->trigger_x = x;
     this->trigger_y = y;
+    this->radius = radius;
 
     // It's not possible use Strings with Switch Statements
     if (action == Function::action.startup)
@@ -21,11 +22,12 @@ Function::Function(String action, byte pin[], int x, int y)
         this->element = new Led(pin[0]);
 }
 
-Function::Function(String action, int x, int y)
+Function::Function(String action, int x, int y, int radius)
 {
     this->function = action;
     this->trigger_x = x;
     this->trigger_y = y;
+    this->radius = radius;
 }
 
 Function::Function(String action, byte pin[])
@@ -51,14 +53,18 @@ Function::~Function() {}
 
 bool Function::operator==(Function &obj) { return (this->get_action() == obj.get_action()); }
 
-void Function::Create_function(String action, byte pin[], int x, int y)
+int Function::get_x() { return this->trigger_x; }
+int Function::get_y() { return this->trigger_y; }
+int Function::get_radius() { return this->radius; }
+
+void Function::Create_function(String action, byte pin[], int x, int y, int radius)
 {
-    functions.push_back(new Function(action, pin, x, y));
+    functions.push_back(new Function(action, pin, x, y, radius));
 }
 
-void Function::Create_function(String action, int x, int y)
+void Function::Create_function(String action, int x, int y, int radius)
 {
-    functions.push_back(new Function(action, x, y));
+    functions.push_back(new Function(action, x, y, radius));
 }
 
 void Function::Create_function(String action, byte pin[])

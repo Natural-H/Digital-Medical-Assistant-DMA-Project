@@ -28,10 +28,11 @@ private:
 
     int trigger_x;
     int trigger_y;
+    int radius;
 
 public:
-    Function(String action, byte pin[], int x, int y);
-    Function(String action, int x, int y);
+    Function(String action, byte pin[], int x, int y, int radius);
+    Function(String action, int x, int y, int radius);
     Function(String action, byte pin[]);
     Function(String action);
     Function();
@@ -40,10 +41,14 @@ public:
 
     bool operator==(Function &obj);
 
+    int get_x();
+    int get_y();
+    int get_radius();
+
     static LCD *lcd;
 
-    static void Create_function(String action, byte pin[], int x, int y);
-    static void Create_function(String action, int x, int y);
+    static void Create_function(String action, byte pin[], int x, int y, int radius);
+    static void Create_function(String action, int x, int y, int radius);
     static void Create_function(String action, byte pin[]);
 
     static Actions action;
