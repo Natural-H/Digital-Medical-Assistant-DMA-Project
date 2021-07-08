@@ -52,12 +52,12 @@ Don't forget to unzip it.
 
 ![image](https://user-images.githubusercontent.com/76983239/124505964-448c3300-dd90-11eb-8f52-0c03d82a3df7.png)
 
-Now you can explore the soruce code, I will very be grateful if you leave a opinion of this, or create a Pull Request if you like.
+Now you can explore the source code, I will very be grateful if you leave a opinion of this, or create a Pull Request if you like.
 
 
 # Seeing the source code in Arduino IDE (Not Recommended)
 
-I personally don't recommend see the soruce code at this way, due certains Arduino IDE behaviors.
+I personally don't recommend to see the source code at this way, due certains Arduino IDE behaviors.
 
 - First, you need to clone the repository using:
 ```shell
@@ -74,7 +74,7 @@ Don't forget to unzip it.
 
 ![image](https://user-images.githubusercontent.com/76983239/124519514-2550ce00-ddaf-11eb-908c-a42bbcb483de.png)
 
-- Got to __Digital-Medical-Assistant-DMA-Project__ folder, in __DMA_Source__ select __DMA_Source.ino__ and a new window of Arduino IDE will open.
+- Go to __Digital-Medical-Assistant-DMA-Project__ folder, in __DMA_Source__ select __DMA_Source.ino__ and a new window of Arduino IDE will open.
 - To see the rest of the source code, click on _"Sketch > Add File..."_:
 
 ![image](https://user-images.githubusercontent.com/76983239/124519799-0bfc5180-ddb0-11eb-8cb9-82893538b592.png)
@@ -83,5 +83,5 @@ Don't forget to unzip it.
 
 ![image](https://user-images.githubusercontent.com/76983239/124519872-4665ee80-ddb0-11eb-8a6a-b94405ca0c3a.png)
 
-- Although, do this can be very annoying and verify the sketch with added files will cause the files to be imported out of the folder and an error verifying of:
+- Although, doing this can be very annoying and verify the sketch with added files will cause the files to be imported out of the folder and an error verifying of:
 > "No such file or directory"

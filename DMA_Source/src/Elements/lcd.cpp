@@ -77,6 +77,6 @@ void LCD::update_section() { this->show_section(this->actual_position); }
 
 void LCD::update_sensors()
 {
-    for (auto &&section : /*Function::functions[0]->lcd->sections*/ LCD::sections)
+    for (auto &&section : LCD::sections)
         section.sensor->update_value();
 }
