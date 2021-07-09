@@ -32,7 +32,9 @@ unsigned int beat_average;
 unsigned long last_beat;
 
 const byte lm35_pin = A0;
-bool is_first_time;
+const byte lm35dz_pin = A1;
+
+const unsigned int reference_temp = 36;
 
 data get_data;
 Section section;
@@ -60,8 +62,6 @@ void setup()
     beat_average = 0;
     last_beat = 0;
 
-    is_first_time = true;
-
     // radio.begin();
     // radio.openReadingPipe(0, address);
     // radio.setPALevel(RF24_PA_MIN);
@@ -84,13 +84,15 @@ void loop()
     //     radio.read(&get_data, sizeof(data));
     // }
 
+    //  This will change due the type of aceleremeter
+
     if (get_data.x < /* X Value Coord */ 500 && get_data.x > /* another value */ 250)
     {
         name_of_section = section.temp;
 
         show_section(1);
     }
-    else if (get_data.x > 0 && get_data.x < 115 || true)
+    else if (get_data.x > 0 && get_data.x < 115)
     {
         name_of_section = section.pulse;
 
@@ -124,7 +126,7 @@ void show_section(uint16_t section)
     switch (section)
     {
     case 1:
-        lcd.print("Section 1");
+        Show_Temperature_Section();
         break;
 
     case 2:
@@ -132,7 +134,7 @@ void show_section(uint16_t section)
         break;
 
     case 3:
-        lcd.print("Section 3");
+        Show_Frequency_Section();
         break;
 
     case 4:
@@ -155,8 +157,8 @@ void Show_BPM_Section()
 
     if (ir_value > 50000)
     {
-
-        lcd.print(beats_per_minute);
+        clearLine(1);
+        lcd.print("BPM: " + (String)beats_per_minute); //  Using explicit casting to String
 
         if (checkForBeat(ir_value) == true)
         {
@@ -188,6 +190,55 @@ void Show_BPM_Section()
     }
 }
 
-void Show_Temperature_Section() { lcd.print((String)get_temperature() + " C"); }
+void clearLine(uint16_t line)
+{
+    lcd.setCursor(0, line);
+    lcd.print("                ");
+}
 
-float get_temperature() { return ((analogRead(lm35_pin) * 5000.0) / 1023) / 10; }
+void Show_Temperature_Section() { lcd.print((String)get_temperature(lm35_pin) + " C"); }
+
+float get_temperature(byte pin) { return ((analogRead(pin) * 5000.0) / 1023.0) / 10.0; }
+
+bool old_state;
+bool is_first_time = true;
+int breath_count = 0;
+unsigned int breaths_per_minute;
+unsigned long time_measuring = 15000;
+unsigned long last_reading = 0;
+
+void Show_Frequency_Section()
+{
+    if (is_first_time)
+        lcd.print("Midiendo...");
+    
+    measure_frequency();
+
+    if (millis() - last_reading < time_measuring)
+    {
+        last_reading = millis();
+        is_first_time = false;
+    }   else
+    {
+        breaths_per_minute = breath_count * 4;
+        breath_count = 0;
+        clearLine(1);
+        lcd.print("Test: " + (String)breaths_per_minute);
+    }
+    
+}
+
+void measure_frequency()
+{
+    bool is_breathing;
+
+    if (get_temperature(lm35dz_pin) > reference_temp)
+        is_breathing = true;
+    else
+        is_breathing = false;
+
+    if (old_state != is_breathing && is_breathing)
+        breath_count++;
+
+    old_state = is_breathing;
+}
