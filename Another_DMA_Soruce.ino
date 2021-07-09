@@ -1,4 +1,4 @@
-//MAX3010x library
+//MAX3010x libraries
 #include <MAX30105.h>
 #include <heartRate.h>
 
@@ -14,6 +14,7 @@ struct data
 {
     int x;
     int y;
+    int z;
 };
 
 struct Section
@@ -26,8 +27,12 @@ struct Section
 
 byte rates[4];
 byte rate_iterator;
+float beats_per_minute;
 unsigned int beat_average;
 unsigned long last_beat;
+
+const byte lm35_pin = A0;
+bool is_first_time;
 
 data get_data;
 Section section;
@@ -39,7 +44,6 @@ MAX30105 sensor;
 String name_of_section;
 byte last_section_showed;
 
-const byte led = 7;
 const byte buzzer = 6;
 
 void setup()
@@ -56,6 +60,8 @@ void setup()
     beat_average = 0;
     last_beat = 0;
 
+    is_first_time = true;
+
     // radio.begin();
     // radio.openReadingPipe(0, address);
     // radio.setPALevel(RF24_PA_MIN);
@@ -63,8 +69,9 @@ void setup()
     // radio.startListening();
 
     sensor.begin();
-    sensor.setup();
-    sensor.setPulseAmplitudeRed(0x0A);
+    sensor.setup();                    //Configure sensor with default settings
+    sensor.setPulseAmplitudeRed(0x0A); //Turn Red LED to low to indicate sensor is running
+    sensor.setPulseAmplitudeGreen(0);  //Turn off Green LED
 
     lcd.begin(16, 2);
     lcd.clear();
@@ -77,28 +84,29 @@ void loop()
     //     radio.read(&get_data, sizeof(data));
     // }
 
-    if (get_data.x < /* X Value Coord */ 500 && get_data.x > /* another value */ 250 || foo() == 1)
+    if (get_data.x < /* X Value Coord */ 500 && get_data.x > /* another value */ 250)
     {
         name_of_section = section.temp;
 
         show_section(1);
     }
-    else if (get_data.x > 0 && get_data.x < 115 || foo() == 2)
+    else if (get_data.x > 0 && get_data.x < 115 || true)
     {
         name_of_section = section.pulse;
 
         show_section(2);
     }
-    else if (get_data.x > -200 && get_data.x < -1 || foo() == 3)
+    else if (get_data.x > -200 && get_data.x < -1)
     {
         name_of_section = section.frecuency;
 
         show_section(3);
     }
-    else if (foo() == 4)
+    else
     {
+        // name_of_section = section.temp;
+        //  show_section(1);
         name_of_section = section.time;
-
         show_section(4);
     }
 }
@@ -145,22 +153,33 @@ void Show_BPM_Section()
 {
     long ir_value = sensor.getIR();
 
-    if (ir_value > 7000)
+    if (ir_value > 50000)
     {
-        lcd.print(beat_average);
+
+        lcd.print(beats_per_minute);
 
         if (checkForBeat(ir_value) == true)
         {
-            lcd.print(beat_average);
-
-            tone(buzzer, 1000);
-            delay(100);
-            noTone(buzzer);
-
-            long delta_time = millis() - last_beat;
+            long delta = millis() - last_beat;
             last_beat = millis();
 
-            calculate_average(delta_time);
+            tone(buzzer, 1000, 100);
+
+            beats_per_minute = 60 / (delta / 1000.0);
+
+            if (beats_per_minute < 255 && beats_per_minute > 20)
+            {
+                rates[rate_iterator++] = (byte)beats_per_minute; //Store this reading in the array
+                rate_iterator %= 4;
+
+                //Take average of readings
+                beat_average = 0;
+
+                for (byte x = 0; x < 4; x++)
+                    beat_average += rates[x];
+
+                beat_average /= 4;
+            }
         }
     }
     else
@@ -169,32 +188,6 @@ void Show_BPM_Section()
     }
 }
 
-double beats_per_minute(long delta_time) { return 60 / delta_time / 1000.0; }
+void Show_Temperature_Section() { lcd.print((String)get_temperature() + " C"); }
 
-void calculate_average(long delta_time)
-{
-    if (beats_per_minute(delta_time) > 20 && beats_per_minute(delta_time) < 255)
-    {
-        rates[rate_iterator++] = (byte)beats_per_minute(delta_time);
-        rate_iterator %= 4;
-
-        beat_average = 0; //  Reset Average
-
-        for (auto &&rate : rates)
-            beat_average += rate;
-
-        beat_average / 4;
-    }
-}
-
-int foo()
-{
-    if (millis() > 0 && millis() < 5000)
-        return 1;
-    else if (millis() > 5000 && millis() < 7000)
-        return 2;
-    else if (millis() > 7000 && millis() < 12000)
-        return 3;
-    else
-        return 4;
-}
+float get_temperature() { return ((analogRead(lm35_pin) * 5000.0) / 1023) / 10; }

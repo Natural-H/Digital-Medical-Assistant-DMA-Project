@@ -58,6 +58,7 @@ Button button = 5;
 
 const byte x = A0;
 const byte y = A1;
+const byte z = A2;
 
 RF24 radio(8, 10);
 const byte address[6] = "00001";
@@ -66,6 +67,7 @@ struct data
 {
     int x;
     int y;
+    int z;
 };
 
 data read_data;
@@ -83,6 +85,7 @@ void loop()
 {
     read_data.x = analogRead(x);
     read_data.y = analogRead(y);
+    read_data.z = analogRead(z);
 
     if (button.is_pressed())
         radio.write(&read_data, sizeof(data));

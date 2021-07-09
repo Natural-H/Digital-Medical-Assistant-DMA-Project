@@ -83,5 +83,5 @@ Don't forget to unzip it.
 
 ![image](https://user-images.githubusercontent.com/76983239/124519872-4665ee80-ddb0-11eb-8a6a-b94405ca0c3a.png)
 
-- Although, doing this can be very annoying and verify the sketch with added files will cause the files to be imported out of the folder and an error verifying of:
+- Although, doing this can be troublesome and verify the sketch with added files will cause the files to be imported out of the folder and an error verifying of:
 > "No such file or directory"
